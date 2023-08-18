@@ -1,5 +1,7 @@
 # Tealeaf
 
+[![license](https://img.shields.io/github/license/jackmuskopf/softy.svg)](https://github.com/jackmuskopf/softy/blob/main/LICENSE)
+
 A simple interface for readable Python HTTP clients
 
 - No dependencies 
