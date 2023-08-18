@@ -8,8 +8,8 @@ A simple interface for readable Python HTTP clients
 
 <br>
 
+A simple example
 ```python
-import json
 import tealeaf
 
 # simple POST
@@ -22,7 +22,12 @@ api = tealeaf.Api(
     credentials=tealeaf.BearerToken('my-jwt')
 )
 api.post('/post', {"message": "hello authorized tealeaf"}).json()
+```
 
+<br>
+
+An example with custom auth algorithm:
+```python
 # define a custom auth handler with a `preprocess_request` method
 class CustomCredentialHandler(tealeaf.ApiCredential):
 
