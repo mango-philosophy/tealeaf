@@ -28,6 +28,35 @@ api.post('/post', {"message": "hello authorized tealeaf"}).json()
 
 <br>
 
+
+
+Integrates easily with `pydantic` for data validation
+```python
+import tealeaf
+from pydantic import BaseModel
+
+class Message(BaseModel):
+    message: str
+
+class EchoResponse(BaseModel):
+    data: Message
+    url: str
+
+# simple POST
+api = tealeaf.Api('https://www.postman-echo.com')
+echo = api \
+    .post('/post', {"message": "hello tealeaf"}) \
+    .astype(EchoResponse)
+
+print(repr(echo))
+```
+
+```
+>>> EchoResponse(data=Message(message='hello tealeaf'), url='https://www.postman-echo.com/post')
+```
+
+<br>
+
 An example with custom auth algorithm:
 ```python
 # define a custom auth handler with a `preprocess_request` method

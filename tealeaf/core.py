@@ -252,6 +252,9 @@ class Response:
     def raise_(self):
         pass
 
+    def astype(self, cls: type):
+        return cls(**self.json())
+
 class ErrorResponse(Response):
 
     def __str__(self):
