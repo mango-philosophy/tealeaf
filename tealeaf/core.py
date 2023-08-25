@@ -13,7 +13,7 @@ from tealeaf.headers import Headers
 logger = logging.getLogger(__name__)
 
 def urljoin(*parts: str) -> str:
-    return "/".join([str(s).strip('/') for s in parts])
+    return "/".join([str(s).strip('/') for s in parts if s])
 
 def format_cls(instance, **kws):
     return f'{instance.__class__.__name__}({", ".join(f"{key}={repr(value)}" for key, value in kws.items())})'
