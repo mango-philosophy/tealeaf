@@ -8,7 +8,19 @@ A simple interface for readable Python HTTP clients
 - Simple and readable
 - Lightweight
 
+
 <br>
+
+## Installation
+
+```
+pip install tealeaf
+```
+
+<br>
+
+## Usage
+
 
 A simple example
 ```python
