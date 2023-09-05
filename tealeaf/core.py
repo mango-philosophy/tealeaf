@@ -10,11 +10,12 @@ import http.client
 import urllib.parse
 import urllib.request
 from tealeaf.headers import Headers
+from tealeaf.__version__ import __version__
 
 logger = logging.getLogger(__name__)
 
 default_headers = {
-    "User-Agent": "python-tealeaf",
+    "User-Agent": f"tealeaf/{__version__}",
     "Connection": "keep-alive",
     "Accept": "*/*",
     "Accept-Encoding": "gzip, deflate, br"

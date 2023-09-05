@@ -23,3 +23,6 @@ class TestRequest(unittest.TestCase):
         self.assertEqual(response['args'], body)
         self.assertEqual(response['headers']['content-type'], 'application/json')
         self.assertEqual(response['headers']['mysecret'], secrets['mysecret'])
+
+if __name__ == '__main__':
+    unittest.main()

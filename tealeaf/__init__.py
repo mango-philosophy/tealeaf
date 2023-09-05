@@ -1,4 +1,4 @@
-import importlib.metadata
+from tealeaf.__version__ import __version__
 from tealeaf.core import (
     Api,
     Request,
@@ -13,7 +13,7 @@ from tealeaf.core import (
     CredentialChain
 )
 
-__version__ = importlib.metadata.version("tealeaf")
+
 
 def get(url, *args, **kws) -> Response:
     return Api(url).get(*args, **kws)
