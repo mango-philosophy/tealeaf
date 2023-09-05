@@ -9,9 +9,16 @@ import json
 import http.client
 import urllib.parse
 import urllib.request
+from tealeaf.headers import Headers
 
 logger = logging.getLogger(__name__)
 
+default_headers = {
+    "User-Agent": "python-tealeaf",
+    "Connection": "keep-alive",
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br"
+}
 
 def urljoin(*parts: str) -> str:
     return "/".join([str(s).strip("/") for s in parts if s])
@@ -39,16 +46,15 @@ class Request:
     ):
         self.url = url
         self.method = method
+
+        # use default headers and update with user provided
         headers = headers or dict()
-        self.headers = dict(**headers)
+        self.headers = Headers(**default_headers)
+        self.headers.update(headers)
+        
         self.json = json
         self._data = data
         self.ssl_context = ssl_context
-
-        self.headers["Accept"] = self.headers.get("Accept") or "*/*"
-        self.headers["Accept-Encoding"] = (
-            self.headers.get("Accept-Encoding") or "gzip, deflate, br"
-        )
 
     def __new__(cls, *args, **kws):
         _json = kws.get("json")
@@ -142,22 +148,18 @@ class BearerToken(ApiCredential):
         return {"Authorization": f"Bearer {self.__token}"}
 
 
-class UsernamePassword(ApiCredential):
+class BasicAuth(ApiCredential):
     def __init__(self, username: str, password: str):
         username = username
         password = password
-        encoded = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode(
-            "utf-8"
-        )
+        encoded = base64.b64encode(
+            f"{username}:{password}".encode("utf-8")
+        ).decode("utf-8")
         self.__authorization = f"Basic {encoded}"
 
     @property
     def headers(self):
         return {"Authorization": self.__authorization}
-
-
-class BasicAuth(UsernamePassword):
-    pass
 
 
 class JsonBodyCredentials(ApiCredential):
@@ -328,6 +330,7 @@ class Api:
         data: bytes = None,
     ):
 
+        headers = headers or dict()
         url = urljoin(self.url, url) if url else self.url
         logger.info(f"{method} {url}")
         request = Request(

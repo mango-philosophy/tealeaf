@@ -1,3 +1,4 @@
+import importlib.metadata
 from tealeaf.core import (
     Api,
     Request,
@@ -6,10 +7,13 @@ from tealeaf.core import (
     ApiError,
     HeaderSecrets,
     BearerToken,
+    BasicAuth,
     JsonBodyCredentials,
     ClientSslCertificate,
     CredentialChain
 )
+
+__version__ = importlib.metadata.version("tealeaf")
 
 def get(url, *args, **kws) -> Response:
     return Api(url).get(*args, **kws)
